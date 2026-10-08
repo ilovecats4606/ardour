@@ -17,13 +17,12 @@ jobs:
 
     - name: Enable Ubuntu Source Repositories
       run: |
-        # Enables the deb-src repositories required by the 'build-dep' command
-        sudo sed -i 's/^#\s*deb-src/deb-src/g' /etc/apt/sources.list /etc/apt/sources.list.d/* || true
+        # Target the new Ubuntu 24.04 DEB822 format to unlock deb-src architecture
+        sudo sed -i 's/^Types: deb$/Types: deb deb-src/' /etc/apt/sources.list.d/ubuntu.sources
 
     - name: Install System Dependencies
       run: |
         sudo apt-get update
-        # Installs base tools and instantly triggers the platform build blueprint for Ardour
         sudo apt-get install -y build-essential pkg-config python3
         sudo apt-get build-dep -y ardour
 
