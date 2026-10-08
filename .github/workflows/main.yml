@@ -15,12 +15,14 @@ jobs:
     - name: Checkout Source Code
       uses: actions/checkout@v4
       with:
-        # Fetch all history and tags so Ardour's version engine can parse MAJOR/MINOR numbers
+        # Pull full commit history
         fetch-depth: 0
 
-    - name: Fetch Git Tags Explicitly
+    - name: Inject Upstream Ardour Version Tags
       run: |
-        git fetch --tags --force
+        # Tie the upstream repository as an external origin and force ingest the production tags
+        git remote add upstream https://github.com
+        git fetch upstream --tags --force
 
     - name: Enable Ubuntu Source Repositories
       run: |
