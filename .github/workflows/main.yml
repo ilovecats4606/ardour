@@ -17,13 +17,14 @@ jobs:
 
     - name: Enable Ubuntu Source Repositories
       run: |
-        # Target the new Ubuntu 24.04 DEB822 format to unlock deb-src architecture
+        # Target the Ubuntu 24.04 DEB822 format to unlock deb-src architecture
         sudo sed -i 's/^Types: deb$/Types: deb deb-src/' /etc/apt/sources.list.d/ubuntu.sources
 
     - name: Install System Dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y build-essential pkg-config python3
+        # Installs base compilers and injects the missing libjpeg development header
+        sudo apt-get install -y build-essential pkg-config python3 libjpeg-dev
         sudo apt-get build-dep -y ardour
 
     - name: Configure Build System
