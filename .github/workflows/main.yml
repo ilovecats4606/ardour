@@ -23,7 +23,8 @@ jobs:
     - name: Install System Dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y build-essential pkg-config python3 libjpeg-dev
+        # Installs base compilers along with the explicit jack, cppunit, and jpeg headers
+        sudo apt-get install -y build-essential pkg-config python3 libjpeg-dev libcppunit-dev libjack-jackd2-dev
         sudo apt-get build-dep -y ardour
 
     - name: Configure Build System
