@@ -23,7 +23,6 @@ jobs:
     - name: Install System Dependencies
       run: |
         sudo apt-get update
-        # Installs base compilers and injects the missing libjpeg development header
         sudo apt-get install -y build-essential pkg-config python3 libjpeg-dev
         sudo apt-get build-dep -y ardour
 
@@ -32,3 +31,15 @@ jobs:
 
     - name: Compile Code
       run: ./waf -j$(nproc)
+
+    - name: Package Compiled Binaries
+      run: |
+        # Creates an archive containing the compiled build workspace folder
+        tar -czf ardour-build.tar.gz build/
+
+    - name: Upload Build Artifact
+      uses: actions/repo-exports/upload-artifact@v4
+      with:
+        name: ardour-compiled-binary
+        path: ardour-build.tar.gz
+        retention-days: 7
