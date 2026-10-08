@@ -38,7 +38,7 @@ jobs:
         tar -czf ardour-build.tar.gz build/
 
     - name: Upload Build Artifact
-      uses: actions/repo-exports/upload-artifact@v4
+      uses: actions/upload-artifact@v4
       with:
         name: ardour-compiled-binary
         path: ardour-build.tar.gz
