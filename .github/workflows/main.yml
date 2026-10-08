@@ -14,6 +14,13 @@ jobs:
     steps:
     - name: Checkout Source Code
       uses: actions/checkout@v4
+      with:
+        # Fetch all history and tags so Ardour's version engine can parse MAJOR/MINOR numbers
+        fetch-depth: 0
+
+    - name: Fetch Git Tags Explicitly
+      run: |
+        git fetch --tags --force
 
     - name: Enable Ubuntu Source Repositories
       run: |
@@ -23,7 +30,6 @@ jobs:
     - name: Install System Dependencies
       run: |
         sudo apt-get update
-        # Installs base compilers along with the explicit jack, cppunit, and jpeg headers
         sudo apt-get install -y build-essential pkg-config python3 libjpeg-dev libcppunit-dev libjack-jackd2-dev
         sudo apt-get build-dep -y ardour
 
